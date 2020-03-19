@@ -1,4 +1,4 @@
-module github.com/minskylab/eyetrakingproject
+module github.com/minskylab/eyetracking
 
 go 1.14
 
