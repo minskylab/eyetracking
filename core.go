@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 
+	"github.com/gofiber/cors"
 	"github.com/gofiber/fiber"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
@@ -28,6 +29,12 @@ func init() {
 
 func main() {
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"mincky.cc"},
+		AllowMethods: []string{"GET", "POST"},
+		AllowHeaders: []string{"*"},
+	}))
 
 	apiv1 := app.Group("/api/v1")
 
