@@ -14,7 +14,7 @@ const MinskyPublicSpace = "minskypublic"
 const projectFolder = "eyetraking"
 
 type StorageInfo struct {
-	Images     []string `json:"images"`
+	Images     []string  `json:"images"`
 	LastUpdate time.Time `json:"lastUpdate"`
 }
 
@@ -56,7 +56,7 @@ func storageInfo() (*StorageInfo, error) {
 
 	for i := range info {
 		log.WithField("content-type", i.ContentType).Infof("object: %s", i.Key)
-		if i.Key == projectFolder + "/" {
+		if i.Key == projectFolder+"/" {
 			continue
 		}
 		totalImages = append(totalImages, i.Key)

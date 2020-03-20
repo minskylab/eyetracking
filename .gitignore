@@ -2,3 +2,5 @@
 .env
 .idea
 eyetrakingproject
+.vscode
+.ipynb_checkpoints

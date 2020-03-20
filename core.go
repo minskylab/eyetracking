@@ -32,7 +32,7 @@ func main() {
 	apiv1 := app.Group("/api/v1")
 
 	apiv1.Get("/info", func(c *fiber.Ctx) {
-		if time.Now().Sub(lastFetch) > 5 * time.Second {
+		if time.Now().Sub(lastFetch) > 5*time.Second {
 			fetchStoreState()
 		}
 

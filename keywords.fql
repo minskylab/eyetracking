@@ -1,0 +1,48 @@
+LET google = DOCUMENT("https://www.google.com/", {
+    driver: "cdp",
+})
+
+LET seed = "dieta"
+
+INPUT(google, 'input[name="q"]', seed)
+
+WAIT(4000)
+
+LET table = ELEMENT(google, "ul[role=listbox]")
+
+LET result = (
+    FOR keyword in ELEMENTS(table, "li")
+        LET key = INNER_TEXT(keyword, "span")
+        RETURN { term:  key }
+)
+
+FOR key IN result
+    LET google = DOCUMENT("https://www.google.com/", {
+        driver: "cdp",
+    })
+    INPUT(google, 'input[name="q"]', key.term)
+    CLICK(google, 'input[name="btnK"]')
+
+    WAIT_NAVIGATION(google)
+
+    LET ads = (
+        FOR result IN ELEMENTS(google, '.g')
+            // filter out extra elements like videos and 'People also ask'
+            FILTER TRIM(result.attributes.class) == 'g'
+            RETURN {
+                title: INNER_TEXT(result, 'h3'),
+                description: INNER_TEXT(result, '.st'),
+                url: ELEMENT(result, 'a').attributes.href
+            }
+    )
+
+    FOR ad in ads
+        NAVIGATE(google, ad.url, 20000)
+        WAIT_ELEMENT(google, "body", 4000)
+        LET images = ELEMENTS(google, "img")
+
+        FOR image in images
+            RETURN {image: image.attributes}
+
+
+
