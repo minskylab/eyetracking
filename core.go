@@ -31,7 +31,7 @@ func main() {
 	app := fiber.New()
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"mincky.cc"},
+		AllowOrigins: []string{"minsky.cc", "projects.minsky.cc"},
 		AllowMethods: []string{"GET", "POST"},
 		AllowHeaders: []string{"*"},
 	}))
